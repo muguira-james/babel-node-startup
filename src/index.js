@@ -45,13 +45,15 @@ const server = new ApolloServer({
 server.applyMiddleware({ app, path: '/graphql' });
 
 const eraseDatabaseOnSync = true;
+const port = process.env.PORT || 8000;
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
     createUsersWithMessages();
   }
 
-  app.listen({ port: 8000 }, () => {
+
+  app.listen({ port }, () => {
     console.log('Apollo Server on http://localhost:8000/graphql');
   });
 });
